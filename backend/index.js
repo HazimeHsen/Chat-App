@@ -21,7 +21,7 @@ app.use(
 app.use(express.urlencoded({ extended: true }));
 
 mongoose
-  .connect("mongodb+srv://form:hazime18@cluster0.u2wuoj0.mongodb.net/Chat", {
+  .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
