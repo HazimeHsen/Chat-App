@@ -9,7 +9,7 @@ const jwt = require("jsonwebtoken");
 const MessageModal = require("./models/message");
 const messageRoute = require("./routes/messageRoutes");
 const fs = require("fs");
-require("dotenv").config({ path: "../combined.env" });
+require("dotenv").config();
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(

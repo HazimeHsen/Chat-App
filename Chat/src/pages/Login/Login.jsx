@@ -74,13 +74,10 @@ export default function Login() {
 
     try {
       dispatch({ type: "REGISTER_REQUEST" });
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_HOST}/user/login`,
-        {
-          name,
-          password,
-        }
-      );
+      const { data } = await axios.post(`http://localhost:5000/user/login`, {
+        name,
+        password,
+      });
 
       const { nameError, passwordError, token, user } = data;
 
@@ -149,6 +146,12 @@ export default function Login() {
             "Login"
           )}
         </button>
+        <div className="my-1">
+          Create new account?{" "}
+          <a className="underline text-blue-500" href="/register">
+            Rgister
+          </a>
+        </div>
       </form>
     </div>
   );

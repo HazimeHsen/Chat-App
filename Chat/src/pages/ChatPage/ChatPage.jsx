@@ -16,16 +16,21 @@ export default function ChatPage() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [newMessageText, setNewMessageText] = useState("");
   const [messages, setMessages] = useState([]);
-  const username = userInfo.name;
-  const userId = userInfo.userId;
+  const username = userInfo ? userInfo.name : "";
+  const userId = userInfo ? userInfo.userId : "";
   const divUnderMessages = useRef();
   const navigate = useNavigate();
+  useEffect(() => {
+    if (!userInfo) {
+      navigate("/login");
+    }
+  }, [navigate, userInfo]);
   useEffect(() => {
     connectTows();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedUser]);
   const connectTows = () => {
-    const ws = new WebSocket(`ws${import.meta.env.VITE_WS_HOST}`);
+    const ws = new WebSocket(`ws://localhost:5000`);
     setWs(ws);
     ws.addEventListener("message", handelMessage);
     ws.addEventListener("close", () => {
@@ -51,9 +56,7 @@ export default function ChatPage() {
   };
   useEffect(() => {
     const getPeople = async () => {
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_HOST}/user/people`
-      );
+      const { data } = await axios.get(`http://localhost:5000/user/people`);
       const offline = data.filter((e) => !Object.keys(online).includes(e._id));
       const allOfflinePeople = {};
       offline.map((o) => (allOfflinePeople[o._id] = o));
@@ -69,7 +72,7 @@ export default function ChatPage() {
       const token = Cookies.get("token");
 
       const { data } = await axios.get(
-        `${import.meta.env.VITE_HOST}/message/${selectedUser}`,
+        `http://localhost:5000/message/${selectedUser}`,
         {
           headers: { authorization: `Bearer ${token}` },
         }
@@ -126,7 +129,7 @@ export default function ChatPage() {
         const token = Cookies.get("token");
         try {
           const { data } = await axios.get(
-            `${import.meta.env.VITE_HOST}/message/${selectedUser}`,
+            `http://localhost:5000/message/${selectedUser}`,
             {
               headers: { authorization: `Bearer ${token}` },
             }
@@ -203,7 +206,7 @@ export default function ChatPage() {
                       message.sender === userId ? "text-right" : "text-left"
                     }`}>
                     <div
-                      className={`text-left inline-block p-2 my-2 rounded-md text-sm  ${
+                      className={`text-left inline-block p-2 my-1 rounded-md text-sm  ${
                         message.sender === userId
                           ? "bg-blue-500 text-white"
                           : "bg-white text-gray-500"
@@ -215,7 +218,7 @@ export default function ChatPage() {
                             className="underline"
                             target="_blank"
                             href={
-                              import.meta.env.VITE_HOST +
+                              "http://localhost:5000/" +
                               "/uploads/" +
                               message.file
                             }

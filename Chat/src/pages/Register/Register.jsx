@@ -111,7 +111,7 @@ export default function Register() {
       dispatch({ type: "REGISTER_REQUEST" });
       const { data } = await axios.post(
         `
-        ${import.meta.env.VITE_HOST}/user/register`,
+        http://localhost:5000/user/register`,
         {
           email,
           name,
@@ -229,6 +229,12 @@ export default function Register() {
             "Register"
           )}
         </button>
+        <div className="my-1">
+          Do you have account?{" "}
+          <a className="underline text-blue-500" href="/login">
+            Login
+          </a>
+        </div>
       </form>
     </div>
   );
