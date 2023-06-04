@@ -1,0 +1,42 @@
+.chat-input {
+  margin-bottom: 15px;
+}
+.send-button {
+  height: 42px;
+}
+.chat-icon {
+  width: 25px;
+  height: 30px;
+}
+.chat-container {
+  min-height: 100vh;
+}
+
+.scroll-contact {
+  direction: rtl;
+}
+/* Custom styling for the scrollbar */
+.scroll-contact::-webkit-scrollbar {
+  width: 10px; /* Adjust the scrollbar width as needed */
+  background-color: transparent; /* Adjust the scrollbar background color */
+}
+
+.scroll-contact::-webkit-scrollbar-thumb {
+  background-color: #3b82f6; /* Adjust the scrollbar thumb color */
+}
+
+.message-scroll {
+  padding: 10px;
+}
+
+.message-scroll::-webkit-scrollbar {
+  width: 10px; /* Adjust the scrollbar width as needed */
+  background-color: transparent; /* Adjust the scrollbar background color */
+}
+
+.message-scroll::-webkit-scrollbar-thumb {
+  background-color: #3b82f6; /* Adjust the scrollbar thumb color */
+}
+.direction {
+  direction: ltr;
+}

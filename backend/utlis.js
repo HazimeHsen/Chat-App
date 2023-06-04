@@ -1,0 +1,49 @@
+const jwt = require("jsonwebtoken");
+
+const validateEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+// Function to generate a token
+const generateToken = (user) => {
+  // Generate a token using the user's information
+  const token = jwt.sign(
+    {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+    },
+    "hazime18", // Use your own secret key here
+    {
+      expiresIn: "20h", // Token expiration time (optional)
+    }
+  );
+
+  return token;
+};
+const isAuth = (req, res, next) => {
+  const authorization = req.headers.authorization;
+  if (authorization) {
+    const token = authorization.slice(7, authorization.length); // Bearer XXXXXX
+    jwt.verify(token, process.env.VITE_SECRET_JWT_KEY, (err, decode) => {
+      if (err) {
+        res.status(401).send({ message: "Invalid Token" });
+      } else {
+        req.user = decode;
+        next();
+      }
+    });
+  } else {
+    res.status(401).send({ message: "No Token" });
+  }
+};
+
+const isAdmin = (req, res, next) => {
+  if (req.user && req.user.isAdmin) {
+    next();
+  } else {
+    res.status(401).send({ message: "Invalid Admin Token" });
+  }
+};
+
+module.exports = { validateEmail, generateToken, isAdmin, isAuth };

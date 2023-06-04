@@ -1,0 +1,23 @@
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  10%,
+  40%,
+  70% {
+    transform: translateX(-5px);
+  }
+  20%,
+  50%,
+  80% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-shake {
+  animation: shake 0.5s linear;
+  animation-iteration-count: 1;
+}
