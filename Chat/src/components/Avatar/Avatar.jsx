@@ -11,7 +11,7 @@ export default function Avatar({ userId, name, online }) {
     "bg-fuchsia-200",
     "bg-rose-200",
   ];
-  const userIdBase10 = parseInt(userId, 16);
+  const userIdBase10 = parseInt(userId ? userId : 16, 16);
   const colorIndex = userIdBase10 % colors.length;
   const color = colors[colorIndex];
   return (

@@ -74,10 +74,13 @@ export default function Login() {
 
     try {
       dispatch({ type: "REGISTER_REQUEST" });
-      const { data } = await axios.post(`http://localhost:5000/user/login`, {
-        name,
-        password,
-      });
+      const { data } = await axios.post(
+        `https://chat-me-ynmg.onrender.com/user/login`,
+        {
+          name,
+          password,
+        }
+      );
 
       const { nameError, passwordError, token, user } = data;
 

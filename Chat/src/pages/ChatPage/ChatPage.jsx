@@ -30,7 +30,8 @@ export default function ChatPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedUser]);
   const connectTows = () => {
-    const ws = new WebSocket(`ws://localhost:5000`);
+    // Update the WebSocket URL to use a secure connection (wss://)
+    const ws = new WebSocket(`wss://chat-me-ynmg.onrender.com/`);
     setWs(ws);
     ws.addEventListener("message", handelMessage);
     ws.addEventListener("close", () => {
@@ -56,7 +57,9 @@ export default function ChatPage() {
   };
   useEffect(() => {
     const getPeople = async () => {
-      const { data } = await axios.get(`http://localhost:5000/user/people`);
+      const { data } = await axios.get(
+        `https://chat-me-ynmg.onrender.com/user/people`
+      );
       const offline = data.filter((e) => !Object.keys(online).includes(e._id));
       const allOfflinePeople = {};
       offline.map((o) => (allOfflinePeople[o._id] = o));
@@ -72,7 +75,7 @@ export default function ChatPage() {
       const token = Cookies.get("token");
 
       const { data } = await axios.get(
-        `http://localhost:5000/message/${selectedUser}`,
+        `https://chat-me-ynmg.onrender.com/message/${selectedUser}`,
         {
           headers: { authorization: `Bearer ${token}` },
         }
@@ -129,7 +132,7 @@ export default function ChatPage() {
         const token = Cookies.get("token");
         try {
           const { data } = await axios.get(
-            `http://localhost:5000/message/${selectedUser}`,
+            `https://chat-me-ynmg.onrender.com/message/${selectedUser}`,
             {
               headers: { authorization: `Bearer ${token}` },
             }
@@ -218,7 +221,7 @@ export default function ChatPage() {
                             className="underline"
                             target="_blank"
                             href={
-                              "http://localhost:5000/" +
+                              "https://chat-me-ynmg.onrender.com/" +
                               "/uploads/" +
                               message.file
                             }

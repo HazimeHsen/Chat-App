@@ -111,7 +111,7 @@ export default function Register() {
       dispatch({ type: "REGISTER_REQUEST" });
       const { data } = await axios.post(
         `
-        http://localhost:5000/user/register`,
+        https://chat-me-ynmg.onrender.com/user/register`,
         {
           email,
           name,

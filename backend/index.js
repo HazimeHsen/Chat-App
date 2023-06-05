@@ -14,12 +14,11 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173", // Replace with your frontend URL
+    origin: "*",
     credentials: true, // Allow cookies to be sent from the backend to the frontend
   })
 );
 app.use(express.urlencoded({ extended: true }));
-
 mongoose
   .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
@@ -55,8 +54,8 @@ wss.on("connection", (connection, req) => {
     connection.ping();
     connection.deathTimer = setTimeout(() => {
       connection.isAive = false;
-      connection.terminate();
       clearInterval(connection.timer);
+      connection.terminate();
       notifyAboutOnlinePeople();
       console.log("dead");
     }, 1000);
